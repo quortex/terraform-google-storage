@@ -20,15 +20,10 @@ provider "google" {
   project = var.project_id
 }
 
-locals {
-  # A prefix to use to prevent conflicts through projects and workspaces.
-  prefix = "${var.buckets_prefix == "" ? "" : "${var.buckets_prefix}-"}${terraform.workspace}"
-}
-
 # A service account to use to access to buckets.
 resource "google_service_account" "quortex" {
   count      = length(var.buckets) > 0 ? 1 : 0
-  account_id = local.prefix
+  account_id = var.storage_prefix == "" ? "quortex-storage" : "${var.storage_prefix}-storage"
 }
 
 # A service account key to use to access to buckets.
@@ -40,7 +35,7 @@ resource "google_service_account_key" "quortex" {
 # The GCS buckets.
 resource "google_storage_bucket" "quortex" {
   for_each           = var.buckets
-  name               = "${local.prefix}-${each.value}"
+  name               = var.storage_prefix == "" ? each.value : "${var.storage_prefix}-${each.value}"
   location           = var.location
   storage_class      = var.storage_class
   force_destroy      = var.force_destroy

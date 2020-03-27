@@ -30,10 +30,10 @@ variable "buckets" {
   description = "The list of buckets to create."
 }
 
-variable "buckets_prefix" {
+variable "storage_prefix" {
   type        = string
-  default     = ""
-  description = "A prefix for bucket names. Bucket names will be computed from this prefix and the provided buckets variable."
+  default     = "quortex"
+  description = "A prefix for bucket names and service account id. Bucket names will be computed from this prefix and the provided buckets variable."
 }
 
 variable "storage_class" {
