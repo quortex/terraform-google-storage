@@ -8,7 +8,33 @@ This module is available on [Terraform Registry][registry_tf_google_storage].
 
 Get all our terraform modules on [Terraform Registry][registry_tf_modules] or on [Github][github_tf_modules] !
 
+## Created resources
 
+This module creates the following resources in GCP:
+
+- a list of buckets
+- a service account with role binding on buckets
+- a service account key to access buckets
+
+
+## Usage example
+
+```hcl
+module "storage" {
+  source = "quortex/storage/google"
+
+  # Globally used variables.
+  project_id = module.network.project_id
+  location   = module.network.region
+
+  # Prevent resources names conflicts for multiple workspaces usage.
+  storage_prefix = terraform.workspace
+
+  # Buckets configuration.
+  buckets       = ["mezzanine", "encoded"]
+  force_destroy = true
+}
+```
 ---
 
 ## Related Projects
@@ -34,7 +60,7 @@ File a GitHub [issue](https://github.com/quortex/terraform-google-storage/issues
 
   [logo]: https://storage.googleapis.com/quortex-assets/logo.webp
   [email]: mailto:info@quortex.io
-  [infra_gcp]: https://storage.googleapis.com/quortex-assets/infra_gcp_001.jpg
+  [infra_gcp]: https://storage.googleapis.com/quortex-assets/infra_gcp_002.jpg
   [registry_tf_modules]: https://registry.terraform.io/modules/quortex
   [registry_tf_google_network]: https://registry.terraform.io/modules/quortex/network/google
   [registry_tf_google_gke_cluster]: https://registry.terraform.io/modules/quortex/gke-cluster/google
