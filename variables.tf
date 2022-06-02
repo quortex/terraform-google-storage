@@ -55,7 +55,19 @@ variable "sa_role" {
 }
 
 variable "labels" {
-  type        = map
+  type        = map(any)
   description = "Labels to apply to resources. A list of key->value pairs."
   default     = {}
+}
+
+variable "action" {
+  type        = string
+  description = "Bucket lifecycle action."
+  default     = "Delete"
+}
+
+variable "age" {
+  type        = number
+  description = "Minimum age of an object in days to satisfy this condition"
+  default     = 2
 }
