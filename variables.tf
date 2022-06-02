@@ -60,14 +60,8 @@ variable "labels" {
   default     = {}
 }
 
-variable "action" {
-  type        = string
-  description = "Bucket lifecycle action."
-  default     = "Delete"
-}
-
-variable "age" {
-  type        = number
-  description = "Minimum age of an object in days to satisfy this condition"
-  default     = 2
+variable "expiration" {
+  type        = object({ age = number, action = string })
+  description = "Lifecycle rule configuration for bucket objects expiration."
+  default     = { age = 2, action = "Delete" }
 }

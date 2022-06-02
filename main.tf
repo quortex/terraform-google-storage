@@ -44,12 +44,13 @@ resource "google_storage_bucket" "quortex" {
 
   lifecycle_rule {
     condition {
-      age = var.age
+      age = var.expiration.age
     }
     action {
-      type = var.action
+      type = var.expiration.action
     }
   }
+
 
 
 }
