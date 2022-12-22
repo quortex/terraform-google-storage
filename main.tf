@@ -41,6 +41,18 @@ resource "google_storage_bucket" "quortex" {
   force_destroy      = var.force_destroy
   bucket_policy_only = true
   labels             = var.labels
+
+  lifecycle_rule {
+    condition {
+      age = var.expiration.age
+    }
+    action {
+      type = var.expiration.action
+    }
+  }
+
+
+
 }
 
 # IAM binding from given role to buckets.
